@@ -4,13 +4,14 @@ import numpy as np
 import scipy.special as sc
 
 
-def poly(coeffs):
+def poly(coeffs, flip=False):
     """ Polynomial airfoil """
-
-    pFlipped = np.flip(coeffs)
+    """ In the order [a0, a1, a2, ... ] for a0 + a1*x + a2*x^2 + ..."""
+    if flip == True:
+        coeffs = np.flip(coeffs)
     alpha0 = 0.0
     CMcby4 = 0.0
-    for i, ai in enumerate(pFlipped[1:], start=1):
+    for i, ai in enumerate(coeffs[1:], start=1):
         alpha0 += i*ai*sc.beta(i+0.5, 0.5)
         CMcby4 += i*ai*(sc.beta(i+1.5, 0.5)-3.0*sc.beta(i+0.5, 1.5))
 
