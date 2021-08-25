@@ -110,3 +110,13 @@ def naca5(Ldigit, Pdigit, Qdigit):
 
     alpha0 *= 180/np.pi
     return alpha0, CMcby4
+
+def fromcoordinatedata(x, y, order=15):
+    p = np.polyfit(x, y, order)
+    alpha0, CMcby4 = poly(p, flip=True)
+    return alpha0, CMcby4
+
+def fromcoordinatefile(filename):
+    mat = np.loadtxt(filename)
+    alpha0, CMcby4 = fromcoordinatedata(mat[:, 0], mat[:, 1])
+    return alpha0, CMcby4
