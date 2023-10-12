@@ -1,7 +1,9 @@
+#!/usr/bin/python3
 """ Returns alpha0 (in deg) and CMc/4 for different types of airfoils """
 
 import numpy as np
 import scipy.special as sc
+import sys
 
 
 def poly(coeffs, flip=False):
@@ -120,3 +122,19 @@ def fromcoordinatefile(filename):
     mat = np.loadtxt(filename)
     alpha0, CMcby4 = fromcoordinatedata(mat[:, 0], mat[:, 1])
     return alpha0, CMcby4
+
+def main():
+    filenames = sys.argv[1:]
+    if len(filenames) >= 1:
+        for filename in filenames:
+            print("File: {}".format(filename))
+            alpha0, CMcby4 = fromcoordinatefile(filename)
+            print("  Zero-lift angle, alpha0 (in deg) = {}".format(alpha0))
+            print("  Moment coefficient, CMcby4 = {}".format(CMcby4))
+    else:
+        print("Usage:")
+        print("        airfoilChara.py airfoil.csv")
+
+
+if __name__ == "__main__":
+    main()
